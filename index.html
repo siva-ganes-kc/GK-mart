@@ -102,6 +102,11 @@
       var(--steel);
   }
   .hero .wrap{padding-top:64px;padding-bottom:64px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .hero-media img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;border:1px solid rgba(255,255,255,.14);box-shadow:0 22px 50px rgba(0,0,0,.4)}
+  .hero-media.no-img{aspect-ratio:4/3;border-radius:14px;border:1px dashed rgba(255,255,255,.25);display:grid;place-items:center;color:#8b919c;font-size:14px;text-align:center;padding:20px}
+  .hero-media.no-img::after{content:"Add your photo → images/hero.jpg"}
+  @media(max-width:820px){ .hero-grid{grid-template-columns:1fr;gap:32px} }
   .eyebrow{
     display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
     color:var(--amber);font-weight:600;margin-bottom:16px;
@@ -235,7 +240,7 @@
   <div class="wrap bar">
     <!-- <a class="brand" href="#top"> -->
       <!-- <span class="logo">GK</span> -->
-      <img src="images/gk_mart_logo.png" alt="GK Mart logo" style="width:44px;height:44px;border-radius:9px;object-fit:contain;">
+      <img src="images/gk_mart.png" alt="GK Mart logo" style="width:90px;height:90px;border-radius:9px;object-fit:contain;">
       <span><b>GK MART </b><span>Engineering Spares</span></span>
     </a>
     <nav>
@@ -250,7 +255,7 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
-  <div class="wrap">
+  <!-- <div class="wrap">
     <span class="eyebrow">Bearings · Fasteners · Tools · Seals · Pumps</span>
     <h1>Every spare your machines need, <em>under one roof.</em></h1>
     <p>GK Mart is a full-range engineering spares supermarket. Genuine parts, honest pricing, and quick answers. See what you need below and enquire in one tap on WhatsApp.</p>
@@ -262,6 +267,27 @@
       <div class="stat"><b>5,000+</b><span>Spares in stock</span></div>
       <div class="stat"><b>Same day</b><span>Counter pickup</span></div>
       <div class="stat"><b>1 tap</b><span>WhatsApp enquiry</span></div>
+    </div>
+  </div> -->
+
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow">Bearings · Fasteners · Tools · Seals · Pumps</span>
+      <h1>Every spare your machines need, <em>under one roof.</em></h1>
+      <p>GK Mart is a full-range engineering spares supermarket. Genuine parts, honest pricing, and quick answers. See what you need below and enquire in one tap on WhatsApp.</p>
+      <div class="cta-row">
+        <a class="btn btn-amber" href="#products">Browse Products</a>
+        <a class="btn btn-ghost" href="#contact">Visit the Store</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>5,000+</b><span>Spares in stock</span></div>
+        <div class="stat"><b>Same day</b><span>Counter pickup</span></div>
+        <div class="stat"><b>1 tap</b><span>WhatsApp enquiry</span></div>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="images/hero.png" alt="Engineering spares at GK Mart"
+           onerror="this.onerror=null;this.style.display='none';this.parentNode.classList.add('no-img')">
     </div>
   </div>
 </section>
