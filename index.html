@@ -176,6 +176,9 @@
   .card-body h3{font-size:20px;font-weight:600;margin-bottom:4px}
   .part-no{font-size:12px;color:var(--muted);font-family:"Barlow Condensed",sans-serif;letter-spacing:.06em}
   .desc{font-size:14px;color:var(--muted);margin:10px 0 14px}
+  .size-label{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 14px}
+  .size-select{display:block;width:100%;margin-top:6px;padding:9px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);font-family:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+  .size-select:focus{outline:none;border-color:var(--amber)}
   .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
   .price{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:22px}
   .price small{font-size:12px;color:var(--muted);font-weight:500;font-family:"Inter"}
@@ -397,6 +400,7 @@ const PRODUCTS = [
     partNo: "6205-2RS",
     category: "Bearings",
     desc: "Sealed 25mm bore bearing for motors, pumps and gearboxes.",
+    sizes: ["25mm bore", "30mm bore", "35mm bore", "40mm bore"],
     price: "₹180",
     unit: "each",
     image: "images/bearing.jpg",
@@ -407,6 +411,7 @@ const PRODUCTS = [
     partNo: "HB-M8-SS",
     category: "Fasteners",
     desc: "Stainless steel M8 hex bolts with nuts & washers. Pack of 50.",
+    sizes: ["25mm bore", "30mm bore", "35mm bore", "40mm bore"],
     price: "₹420",
     unit: "pack",
     image: "images/bolts.jpg",
@@ -417,6 +422,7 @@ const PRODUCTS = [
     partNo: "A-42",
     category: "Power Transmission",
     desc: "Industrial rubber V-belt for machinery drives. 42-inch.",
+    sizes: ["25mm bore", "30mm bore", "35mm bore", "40mm bore"],
     price: "₹150",
     unit: "each",
     image: "images/belt.jpg",
@@ -427,6 +433,7 @@ const PRODUCTS = [
     partNo: "TC-304707",
     category: "Seals",
     desc: "Double-lip rotary shaft oil seal, nitrile rubber.",
+    sizes: ["25mm bore", "30mm bore", "35mm bore", "40mm bore"],
     price: "₹95",
     unit: "each",
     image: "images/seal.jpg",
@@ -437,6 +444,7 @@ const PRODUCTS = [
     partNo: "TL-ADJ10",
     category: "Tools",
     desc: "Chrome-vanadium adjustable spanner with wide jaw.",
+    sizes: ["25mm bore", "30mm bore", "35mm bore", "40mm bore"],
     price: "₹340",
     unit: "each",
     image: "images/wrench.jpg",
@@ -447,6 +455,7 @@ const PRODUCTS = [
     partNo: "PMP-05HP",
     category: "Pumps",
     desc: "Self-priming monoblock pump for clean water transfer.",
+    sizes: ["25mm bore", "30mm bore", "35mm bore", "40mm bore"],
     price: "₹2,650",
     unit: "each",
     image: "images/pump.jpg",
@@ -527,7 +536,6 @@ function renderProducts(){
   if(!list.length){ grid.innerHTML = '<p class="empty">No products in this category yet.</p>'; return; }
 
   list.forEach(p => {
-    const msg = `Hi GK Mart, I'm interested in "${p.name}" (Part No: ${p.partNo}). Is it available and what's the price?`;
     const card = document.createElement("article");
     card.className = "card";
     card.innerHTML = `
@@ -541,14 +549,32 @@ function renderProducts(){
         <h3>${p.name}</h3>
         <div class="part-no">Part No. ${p.partNo}</div>
         <p class="desc">${p.desc}</p>
+        ${p.sizes && p.sizes.length ? `
+        <label class="size-label">Available sizes / dimensions
+          <select class="size-select">
+            ${p.sizes.map(s => `<option value="${s}">${s}</option>`).join("")}
+          </select>
+        </label>` : ""}
         <div class="price-row">
           <div></div>
-          <a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">
+          <a class="wa-btn enquire-btn" href="#" target="_blank" rel="noopener">
             <svg><use href="#wa-icon"/></svg> Enquire
           </a>
         </div>
       </div>`;
     grid.appendChild(card);
+
+    // When a size is chosen, include it in the WhatsApp message.
+    const btn = card.querySelector(".enquire-btn");
+    const sel = card.querySelector(".size-select");
+    function updateLink(){
+      let msg = `Hi GK Mart, I'm interested in "${p.name}"`;
+      if(sel) msg += ` (Size: ${sel.value})`;
+      msg += ". Is it available and what's the price?";
+      btn.href = waLink(msg);
+    }
+    updateLink();
+    if(sel) sel.addEventListener("change", updateLink);
   });
 }
 renderProducts();
